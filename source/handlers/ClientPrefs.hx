@@ -21,8 +21,8 @@ class ClientPrefs
 			options = FlxG.save.data.options;
 
 		if (ClientPrefs.getOption('endlessMode') == null)
-			ClientPrefs.setOption('endlessMode', false);
-		if (ClientPrefs.getOption('charaOverGF') == null)
-			ClientPrefs.setOption('charaOverGF', false);
+			ClientPrefs.setOption('endlessMode', false); //No worky :( - Lexi 
+		if (ClientPrefs.getOption('newHoldNotes') == null)
+			ClientPrefs.setOption('newHoldNotes', true);
 	}
 }

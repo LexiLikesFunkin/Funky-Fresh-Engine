@@ -13,7 +13,7 @@ class GameplayOptionsState extends MusicBeatState
 {
     var settingsSave:FlxSave = new FlxSave();
 
-    var menuItems:Array<String> = [''];
+    var menuItems:Array<String> = ['New Hold Sustains'];
     var curSelected:Int = 0;
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
@@ -66,6 +66,11 @@ class GameplayOptionsState extends MusicBeatState
                 var daSelected:String = menuItems[curSelected];
     
                 switch (daSelected) {
+                    case "New Hold Sustains":
+                        gtText.text = 'New Hold Sustains is currently set to ${ClientPrefs.getOption('newHoldNotes')}.';
+
+                        if (controls.ACCEPT)
+                            ClientPrefs.setOption('newHoldNotes', !ClientPrefs.getOption('newHoldNotes'));
                 }
             }
            super.update(elapsed);

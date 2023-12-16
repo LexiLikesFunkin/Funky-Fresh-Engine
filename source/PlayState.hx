@@ -1367,7 +1367,12 @@ class PlayState extends MusicBeatState
 				{
 					if (Math.abs(note.noteData) == spr.ID)
 					{
-						spr.animation.play('confirm', true);
+						if (note.isSustainNote)
+							if (ClientPrefs.getOption('newHoldNotes') == true)
+								spr.animation.play('confirm', true);
+						
+						if (!note.isSustainNote)
+							spr.animation.play('confirm', true);
 					}
 				});
 	
