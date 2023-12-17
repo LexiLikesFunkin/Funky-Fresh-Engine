@@ -992,7 +992,7 @@ class PlayState extends MusicBeatState
 			ratingMod = 0.4;
 			isSick = false;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.45)
 		{
 			daRating = 'good';
 			score = 200;

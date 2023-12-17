@@ -72,10 +72,16 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "v" + Application.current.meta.get('version'));
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 46, 0, "v" + Application.current.meta.get('version'));
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+
+		var buildShit:FlxText = new FlxText(5, FlxG.height - 32, 0, "Engine Build Number: " + BuildNumber.getBuildNumber() + "
+		 - Pre-Release Alpha Version 0.0.1");
+		buildShit.scrollFactor.set();
+		buildShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(buildShit);
 
 		changeItem();
 
