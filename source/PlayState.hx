@@ -38,6 +38,8 @@ class PlayState extends MusicBeatState
 {
 	var scoreTxt:FlxText;
 
+	var beatTxt:FlxText;
+
 	var gameControls:Controls;
 
 	public static var songAccuracy:Float = 0;
@@ -292,12 +294,18 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
+		beatTxt = new FlxText(5, FlxG.height - 32, 0, "", 20);
+		beatTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		beatTxt.scrollFactor.set();
+		add(beatTxt);
+
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		beatTxt.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -611,6 +619,7 @@ class PlayState extends MusicBeatState
 		//scoreTxt.text = "Score: " + songScore;
 		//infoTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " +  ratingTxt + " || " + "Combo: " + comboScore + " || " + "Misses: " + misses;
 		scoreTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " +  ratingTxt + " || " + "Combo: " + combo + " || " + "Misses: " + misses;
+		beatTxt.text = "Totalbeats: " + totalBeats;
 
 		var ratingArray:Array<Dynamic> = [
 			[99.95, "[S++]", 0xFFFFD700],
@@ -1455,6 +1464,18 @@ class PlayState extends MusicBeatState
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
+		if (curSong.toLowerCase() == 'dadbattle'){
+			if (curBeat >= 142 && curBeat < 152 && camZooming && FlxG.camera.zoom < 1.35 && totalBeats % 2 == 0){
+				FlxG.camera.zoom += 0.015;
+				camHUD.zoom += 0.03;}
+			if (curBeat >= 152 && curBeat < 160 && camZooming && FlxG.camera.zoom < 1.6){
+				FlxG.camera.zoom += 0.03;
+				camHUD.zoom += 0.045;}
+			if (curBeat >= 160 && curBeat < 224 && camZooming && FlxG.camera.zoom < 1.35 && totalBeats % 2 == 0){
+				FlxG.camera.zoom += 0.015;
+				camHUD.zoom += 0.03;}
+		}
+
 		if (camZooming && FlxG.camera.zoom < 1.35 && totalBeats % 4 == 0)
 		{
 			FlxG.camera.zoom += 0.015;
@@ -1516,4 +1537,13 @@ class PlayState extends MusicBeatState
 			else
 				songAccuracy = FlxMath.roundDecimal(Math.max(0, coolNoteFloat / allNotes * 100), 2);
 		}
+	/*function beatOverride(elapsed:Float) {
+			if ((totalBeats % 4 == 0) && curSong.toLowerCase() == 'dadbattle')
+				beatZoom();
+	}
+	function beatZoom() {
+		if (camZooming && FlxG.camera.zoom < 1.35){
+			FlxG.camera.zoom += 0.015;
+			camHUD.zoom += 0.03;}
+	}*/ //testin some shit out!
 }
