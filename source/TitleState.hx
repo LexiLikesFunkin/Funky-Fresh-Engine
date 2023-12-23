@@ -20,6 +20,10 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
+#if discord_rpc
+import Discord.DiscordClient;
+#end
+
 class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
@@ -71,6 +75,15 @@ class TitleState extends MusicBeatState
 			if (StoryMenuState.weekUnlocked.length < 3)
 				StoryMenuState.weekUnlocked.insert(0, true);
 		}
+
+		#if discord_rpc
+		DiscordClient.initialize();
+
+		Application.current.onExit.add(function(exitCode)
+		{
+			DiscordClient.shutdown();
+		});
+		#end
 
 		#if SKIP_TO_PLAYSTATE
 		FlxG.switchState(new StoryMenuState());
