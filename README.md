@@ -6,4 +6,4 @@ Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-
 Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
 
 # Current compile count: 256
-# Current engine version: 0.2.2
+# Current engine version: 0.0.2

@@ -38,5 +38,15 @@ Changed:
  - Fixed Spookeez vocals issue
  - Changed X offset from 10 to 3px for FPS counter to match the offset of 3 for Y
 
+Last Prep for 0.0.2 - [28/12/23]
+Changed:
+- Changelog.md
+- README.md
+
+Somehow this typo slipped me twice. - [28/12/23]
+Changed:
+- Changelog.md
+- README.md
+(wrote 0.2.2 rather than 0.0.2)
 
 
