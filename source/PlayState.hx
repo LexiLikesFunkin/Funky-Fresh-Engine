@@ -31,6 +31,7 @@ import flixel.util.FlxTimer;
 import haxe.Json;
 import lime.utils.Assets;
 import flixel.math.FlxRect;
+import NoteSplash;
 
 using StringTools;
 
@@ -81,6 +82,8 @@ class PlayState extends MusicBeatState
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
 	private var cpuStrums:FlxTypedGroup<FlxSprite>;
+
+	var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -293,6 +296,14 @@ class PlayState extends MusicBeatState
 		else
 			startCountdown();
 
+		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
+
+		var noteSplash:NoteSplash = new NoteSplash(100, 100, 0);
+		grpNoteSplashes.add(noteSplash);
+		noteSplash.alpha = 0.1;
+
+		add(grpNoteSplashes);
+
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
@@ -310,6 +321,7 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		beatTxt.cameras = [camHUD];
+		grpNoteSplashes.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -992,7 +1004,7 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	private function popUpScore(strumtime:Float, daNote:Note):Void
 	{
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 		// boyfriend.playAnim('hey');
@@ -1033,6 +1045,16 @@ class PlayState extends MusicBeatState
 			ratingMod = 0.75;
 			isSick = false;
 		}
+
+		if (isSick)
+			{
+				var noteSplash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+				noteSplash.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
+				// new NoteSplash(note.x, daNote.y, daNote.noteData);
+				if (ClientPrefs.getOption('notesplashes') == true)
+					grpNoteSplashes.add(noteSplash);
+			}
+
 		coolNoteFloat += ratingMod;
 		songScore += score;
 
@@ -1391,7 +1413,7 @@ class PlayState extends MusicBeatState
 			{
 				combo += 1;
 				allNotes++;
-				popUpScore(note.strumTime);
+				popUpScore(note.strumTime, note);
 			}
 
 			if (note.noteData >= 0)
