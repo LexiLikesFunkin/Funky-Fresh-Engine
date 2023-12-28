@@ -1,30 +1,42 @@
 # Changelog
-All notable changes will be documented in this file.
+All commits will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Initial Commit - [16/12/23]
+We pushin shit out, gonna update more in soon
 
-## [Unreleased]
+Read the desc - [16/12/23]
+Added: 
+ - Option to make strum line look less flashy on hold notes
+ - Options menu (wip, will make better in coming updates)
+Removed:
+ - All things from the Chara Over GF mod (just leftover code)
+ - Removing Endless Mode functionality until I can get it working later.
 
-## [0.2.1] - 2020-11-06
-### Added
-- Scores to the freeplay menu
-- A few new intro boot messages.
-- Lightning effect in Spooky stages
-- Campaign scores, can now compete on scoreboards for campaign!
-- Can now change difficulties in Freeplay mode
+Added some stuff, removed error file - [17/12/23]
+Added:
+ - Build Number
+ - Menu information
+Changed:
+ - Time given to hit sicks from 20ms to 45ms
+Removed:
+ - Error file
 
-### Changed
-- Balanced out Normal mode for the harder songs. Should be much easier all around.
-- Put tutorial in it's own 'week', so that if you want to play week 1, you don't have to play the tutorial.
+few tweaks, will fix spookeez soon - [19/12/23]
 
-### Fixed
-- One of the charting bits on South and Spookeez during the intro.
+Very silly, but works well - [23/12/23]
+Added: CPU Strums
+Changed: Skipped splash on startup
+Removed: some old code
+Very similar to the last commit
 
-## [0.2.0] - 2020-11-01
-### Added
-- Uhh Newgrounds release lolol I always lose track of shit.
+0.0.2 Additions - [28/12/23]
+Added:
+ - Note Splashes
+ - Nicer FPS counter
+Changed:
+ - Made FPS counter larger
+ - Fixed Spookeez vocals issue
+ - Changed X offset from 10 to 3px for FPS counter to match the offset of 3 for Y
 
-## [0.1.0] - 2020-10-05
-### Added
-- Uh, everything. This the game's initial gamejam release. We put it out
+
+
