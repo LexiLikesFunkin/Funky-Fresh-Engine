@@ -15,17 +15,27 @@ class BuildNumber {
     public static macro function getBuildNumber() {
         var buildNumber = 0;
         #if !display
-        if (!FileSystem.exists("export/release/.build")) {
-        //File.saveContent(".build", Std.string(buildNumber));
-        }
-        else {
             //buildNumber = Std.parseInt(File.getContent("export/release/.build"));
-            var releaseBuilds = Std.parseInt(File.getContent("export/release/.build"));
-            var debugBuilds = Std.parseInt(File.getContent("export/debug/.build"));
-            
-            buildNumber = (releaseBuilds + debugBuilds);
+            if (FileSystem.exists("export/debug/.build") && FileSystem.exists("export/release/.build"))
+                {
+                    var releaseBuilds = Std.parseInt(File.getContent("export/release/.build"));
+                    var debugBuilds = Std.parseInt(File.getContent("export/debug/.build"));
+                    buildNumber = (releaseBuilds + debugBuilds);
+                }
+
+            else if (FileSystem.exists("export/debug/.build") && !FileSystem.exists("export/release/.build"))
+                {
+                    var debugBuilds = Std.parseInt(File.getContent("export/debug/.build"));
+                    buildNumber = (debugBuilds);
+                }
+
+            else if (!FileSystem.exists("export/debug/.build") && FileSystem.exists("export/release/.build"))
+                {
+                    var releaseBuilds = Std.parseInt(File.getContent("export/release/.build"));
+                    buildNumber = (releaseBuilds);
+                }
+
             // File.saveContent(".build", Std.string(buildNumber + 1));
-        }
         #end
 
         // File.saveContent("./test.txt", #if display "display" #else "not display" #end + " " + Std.string(buildNumber));
