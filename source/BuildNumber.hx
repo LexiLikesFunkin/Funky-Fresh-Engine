@@ -23,13 +23,13 @@ class BuildNumber {
                     buildNumber = (releaseBuilds + debugBuilds);
                 }
 
-            else if (FileSystem.exists("export/debug/.build") && !FileSystem.exists("export/release/.build"))
+            if (FileSystem.exists("export/debug/.build") && !FileSystem.exists("export/release/.build"))
                 {
                     var debugBuilds = Std.parseInt(File.getContent("export/debug/.build"));
                     buildNumber = (debugBuilds);
                 }
 
-            else if (!FileSystem.exists("export/debug/.build") && FileSystem.exists("export/release/.build"))
+            if (!FileSystem.exists("export/debug/.build") && FileSystem.exists("export/release/.build"))
                 {
                     var releaseBuilds = Std.parseInt(File.getContent("export/release/.build"));
                     buildNumber = (releaseBuilds);

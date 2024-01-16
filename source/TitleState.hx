@@ -20,7 +20,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-#if discord_rpc
+#if desktop
 import Discord.DiscordClient;
 #end
 
@@ -53,6 +53,9 @@ class TitleState extends MusicBeatState
 		#if (!web)
 		TitleState.soundExt = '.ogg';
 		#end
+		#if (web)
+		TitleState.soundExt = '.mp3';
+		#end
 
 		PlayerSettings.init();
 
@@ -76,20 +79,16 @@ class TitleState extends MusicBeatState
 				StoryMenuState.weekUnlocked.insert(0, true);
 		}
 
-		#if discord_rpc
+		#if desktop
 		DiscordClient.initialize();
-
-		Application.current.onExit.add(function(exitCode)
-		{
-			DiscordClient.shutdown();
-		});
 		#end
 
-		#if SKIP_TO_PLAYSTATE
-		FlxG.switchState(new StoryMenuState());
-		#else
+		//Application.current.onExit.add(function(exitCode)
+		//{
+			//DiscordClient.shutdown();
+		//});
+
 		startIntro();
-		#end
 	}
 
 	var logoBl:FlxSprite;
@@ -231,10 +230,14 @@ class TitleState extends MusicBeatState
 			transitioning = true;
 			// FlxG.sound.music.stop();
 
+			#if (!web)
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
 				FlxG.switchState(new MainMenuState());
 			});
+			#else
+				FlxG.switchState(new MainMenuState());
+			#end
 			// FlxG.sound.play('assets/music/titleShoot' + TitleState.soundExt, 0.7);
 		}
 

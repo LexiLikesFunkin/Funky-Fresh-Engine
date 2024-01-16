@@ -43,10 +43,5 @@ Changed:
 - Changelog.md
 - README.md
 
-Somehow this typo slipped me twice. - [28/12/23]
-Changed:
-- Changelog.md
-- README.md
-(wrote 0.2.2 rather than 0.0.2)
 
 

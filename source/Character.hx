@@ -31,7 +31,7 @@ class Character extends FlxSprite
 		{
 			case 'bf':
 				healthIcon = 'bf';
-				var tex = FlxAtlasFrames.fromSparrow(AssetPaths.BOYFRIEND__png, AssetPaths.BOYFRIEND__xml);
+				var tex = FlxAtlasFrames.fromSparrow("assets/images/characters/bf/BOYFRIEND.png", "assets/images/characters/bf/BOYFRIEND.xml");
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -72,7 +72,7 @@ class Character extends FlxSprite
 				
 			case 'gf':
 				// GIRLFRIEND CODE
-				tex = FlxAtlasFrames.fromSparrow(AssetPaths.GF_assets__png, AssetPaths.GF_assets__xml);
+				tex = FlxAtlasFrames.fromSparrow("assets/images/characters/gf/GF_assets.png", "assets/images/characters/gf/GF_assets.xml");
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
 				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
@@ -102,7 +102,7 @@ class Character extends FlxSprite
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
 				healthIcon = 'dad';
-				tex = FlxAtlasFrames.fromSparrow(AssetPaths.DADDY_DEAREST__png, AssetPaths.DADDY_DEAREST__xml);
+				tex = FlxAtlasFrames.fromSparrow("assets/images/characters/dad/DADDY_DEAREST.png", "assets/images/characters/dad/DADDY_DEAREST.xml");
 				frames = tex;
 				animation.addByPrefix('idle', 'Dad idle dance', 24);
 				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
@@ -117,7 +117,7 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -10, 10);
 				addOffset("singDOWN", 0, -30);
 			case 'spooky':
-				tex = FlxAtlasFrames.fromSparrow(AssetPaths.spooky_kids_assets__png, AssetPaths.spooky_kids_assets__xml);
+				tex = FlxAtlasFrames.fromSparrow("assets/images/characters/spooky/spooky_kids_assets.png", "assets/images/characters/spooky/spooky_kids_assets.xml");
 				frames = tex;
 				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
 				animation.addByPrefix('singDOWN', 'spooky DOWN note', 24, false);
@@ -136,7 +136,7 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 			case 'monster':
-				tex = FlxAtlasFrames.fromSparrow(AssetPaths.Monster_Assets__png, AssetPaths.Monster_Assets__xml);
+				tex = FlxAtlasFrames.fromSparrow("assets/images/characters/monster/Monster_Assets.png", "assets/images/characters/monster/Monster_Assets.xml");
 				frames = tex;
 				animation.addByPrefix('idle', 'monster idle', 24);
 				animation.addByPrefix('singUP', 'monster up note', 24, false);

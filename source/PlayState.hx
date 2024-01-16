@@ -1,5 +1,6 @@
 package;
 
+import handlers.Files;
 import handlers.ClientPrefs;
 import Section.SwagSection;
 import Song.SwagSong;
@@ -18,7 +19,13 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
+
+#if (flixel >= "5.3.0")
+import flixel.sound.FlxSound;
+#else
 import flixel.system.FlxSound;
+#end
+
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -33,11 +40,18 @@ import lime.utils.Assets;
 import flixel.math.FlxRect;
 import NoteSplash;
 
+import flixel.util.FlxGradient;
+
 using StringTools;
 
 class PlayState extends MusicBeatState
 {
 	var scoreTxt:FlxText;
+
+	var sickTracker:Int = 0;
+	var goodTracker:Int = 0;
+	var badTracker:Int = 0;
+	var shitTracker:Int = 0;
 
 	var beatTxt:FlxText;
 
@@ -272,10 +286,13 @@ class PlayState extends MusicBeatState
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 
+		var healthC1:FlxColor = 0xFFFF0000;
+		var healthC2:FlxColor = 0xFF66FF33;
+
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		healthBar.createFilledBar(healthC1, healthC2);
 		add(healthBar);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
@@ -647,15 +664,31 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 		recalculateAccuracy();
 
+		var rankingTracker:String = '';
+
+		if (sickTracker == 0 && goodTracker == 0 && badTracker == 0 && shitTracker == 0 && misses == 0) //Default value, like for when a song starts and no notes have been hit.
+			rankingTracker = '[Unranked]';
+		if (sickTracker >= 1 && goodTracker == 0 && badTracker == 0 && shitTracker == 0 && misses == 0)
+			rankingTracker = '[MFC!!]';
+		if (goodTracker >= 1 && badTracker == 0 && shitTracker == 0 && misses == 0)
+			rankingTracker = '[GFC!]';
+		if (badTracker >= 1 && misses == 0)
+			rankingTracker = '[FC]';
+		if (misses >= 1 && misses <= 10)
+			rankingTracker = '[SDCB]';
+		if (misses >= 10)
+			rankingTracker = '[Clear]';
+
 		// scoreTxt.text = "Score: " + songScore;
 		// infoTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " +  ratingTxt + " || " + "Combo: " + comboScore + " || " + "Misses: " + misses;
-		scoreTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " + ratingTxt + " || " + "Combo: " + combo + " || " + "Misses: "
-			+ misses;
-		beatTxt.text = "Totalbeats: " + totalBeats;
+		// scoreTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " + ratingTxt + " || " + "Combo: " + combo + " || " + "Misses: " + misses;
+		scoreTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "%" + ' || ' + "Ranking: " + rankingTracker + " || " + "Misses: " + misses;
+
+		//beatTxt.text = "Totalbeats: " + totalBeats; //debug stuff, forgot to remove - Lexi~
 
 		var ratingArray:Array<Dynamic> = [
 			[99.95, "[S++]", 0xFFFFD700], [99.5, "[S+]", 0xFF8D3D8D],  [99, "[S]", 0xFF00FFFF], [95, "[A+]", 0xFF31CD31], [90, "[A]", 0xFF00FF00],
-			    [85, "[B+]", 0xFFFBC898],    [80, "[B]", 0xFFFF8000], [75, "[C+]", 0xFFFA5D5D],  [70, "[C]", 0xFFFFFFFF],  [0, "[D]", 0xFFFFFFFF],
+			[85, "[B+]", 0xFFFBC898],    [80, "[B]", 0xFFFF8000], [75, "[C+]", 0xFFFA5D5D],  [70, "[C]", 0xFFFFFFFF],  [0, "[D]", 0xFFFFFFFF],
 		];
 
 		for (thing in ratingArray)
@@ -1030,6 +1063,7 @@ class PlayState extends MusicBeatState
 			score = 50;
 			ratingMod = 0.1;
 			isSick = false;
+			shitTracker += 1;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
@@ -1037,6 +1071,7 @@ class PlayState extends MusicBeatState
 			score = 100;
 			ratingMod = 0.4;
 			isSick = false;
+			badTracker += 1;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.45)
 		{
@@ -1044,9 +1079,11 @@ class PlayState extends MusicBeatState
 			score = 200;
 			ratingMod = 0.75;
 			isSick = false;
+			goodTracker += 1;
 		}
 
 		if (isSick)
+			sickTracker += 1;
 			{
 				var noteSplash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 				noteSplash.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
@@ -1318,14 +1355,15 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			health -= 0.06;
+			health -= 0.03; //Made it less punishing to attempt the note and fail, this value was 0.6 before!!
 			if (combo > 5)
 			{
 				gf.playAnim('sad');
 			}
 			combo = 0;
-
+			misses += 1;
 			songScore -= 10;
+			allNotes++;
 
 			FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play('assets/sounds/missnote1' + TitleState.soundExt, 1, false);

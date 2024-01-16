@@ -25,10 +25,10 @@ class HealthIcon extends FlxSprite {
 
 	public function changeIcon(char:String) {
 		if (char != this.char) {
-			if (!Assets.exists(Files.image('icons/icon-$char')) || char == null)
+			if (!Assets.exists(Files.image('characters/$char/icon-$char')) || char == null)
 				loadGraphic(Files.image('icons/icon-face'), true, 150, 150);
 			else
-				loadGraphic(Files.image('icons/icon-$char'), true, 150, 150);
+				loadGraphic(Files.image('characters/$char/icon-$char'), true, 150, 150);
 
 			animation.add(char, [0, 1], 0, false, isPlayer);
 		}

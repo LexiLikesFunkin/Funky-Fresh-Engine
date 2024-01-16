@@ -19,10 +19,19 @@ class ClientPrefs
 	public static function initOptions(){
 		if (FlxG.save.data.options != null)
 			options = FlxG.save.data.options;
+		var framerate:Int = 60;
 
 		if (ClientPrefs.getOption('endlessMode') == null)
-			ClientPrefs.setOption('endlessMode', false); //No worky :( - Lexi 
+			ClientPrefs.setOption('endlessMode', false); //No worky :( - Lexi		
 		if (ClientPrefs.getOption('newHoldNotes') == null)
 			ClientPrefs.setOption('newHoldNotes', true);
+
+		if(framerate > FlxG.drawFramerate) {
+			FlxG.updateFramerate = framerate;
+			FlxG.drawFramerate = framerate;
+		} else {
+			FlxG.drawFramerate = framerate;
+			FlxG.updateFramerate = framerate;
+		}
 	}
 }
