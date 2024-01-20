@@ -23,8 +23,23 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
+	var funkyFreshQuips:Array<String> = [
+		'Shoutouts to tom fulp', 'This text is randomized!',
+		'Subscribe and hit that bell', 'Go ask your parents',
+		'Also play Terraria!', 'Also play Minecraft!',
+		'Does anyone even read these?', 'You call me daddy.',
+		'Tone it down!', 'Nyeh heh heh!',
+		'Too many quips.', 'There are 12 of these.'];
+	var curWacky:String = '';
+
 	override function create()
 	{
+		curWacky = FlxG.random.getObject(funkyFreshQuips);
+
+		#if desktop
+		DiscordClient.changePresence('On the main menu.', '$curWacky');
+		#end
+
 		persistentUpdate = persistentDraw = true;
 
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(AssetPaths.menuBG__png);

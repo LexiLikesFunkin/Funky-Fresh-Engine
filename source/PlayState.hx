@@ -53,8 +53,6 @@ class PlayState extends MusicBeatState
 	var badTracker:Int = 0;
 	var shitTracker:Int = 0;
 
-	var beatTxt:FlxText;
-
 	var gameControls:Controls;
 
 	public static var songAccuracy:Float = 0;
@@ -126,6 +124,10 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		#if desktop
+		DiscordClient.changePresence('Playing ' + SONG.song, '');
+		#end
+
 		gameControls.bindKeys;
 		recalculateAccuracy();
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -185,30 +187,31 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(AssetPaths.stageback__png);
-			// bg.setGraphicSize(Std.int(bg.width * 2.5));
-			// bg.updateHitbox();
-			bg.antialiasing = true;
-			bg.scrollFactor.set(0.9, 0.9);
-			bg.active = false;
-			add(bg);
+				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(AssetPaths.stageback__png);
+				// bg.setGraphicSize(Std.int(bg.width * 2.5));
+				// bg.updateHitbox();
+				bg.antialiasing = true;
+				bg.scrollFactor.set(0.9, 0.9);
+				bg.active = false;
+				add(bg);
 
-			var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(AssetPaths.stagefront__png);
-			stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-			stageFront.updateHitbox();
-			stageFront.antialiasing = true;
-			stageFront.scrollFactor.set(0.9, 0.9);
-			stageFront.active = false;
-			add(stageFront);
+				var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(AssetPaths.stagefront__png);
+				stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+				stageFront.updateHitbox();
+				stageFront.antialiasing = true;
+				stageFront.scrollFactor.set(0.9, 0.9);
+				stageFront.active = false;
+				add(stageFront);
 
-			var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(AssetPaths.stagecurtains__png);
-			stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-			stageCurtains.updateHitbox();
-			stageCurtains.antialiasing = true;
-			stageCurtains.scrollFactor.set(1.3, 1.3);
-			stageCurtains.active = false;
-
-			add(stageCurtains);
+				if (ClientPrefs.getOption('performancePlus') == false){
+					var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(AssetPaths.stagecurtains__png);
+					stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+					stageCurtains.updateHitbox();
+					stageCurtains.antialiasing = true;
+					stageCurtains.scrollFactor.set(1.3, 1.3);
+					stageCurtains.active = false;
+					add(stageCurtains);
+				}
 		}
 
 		gf = new Character(400, 130, 'gf');
@@ -326,18 +329,12 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
-		beatTxt = new FlxText(5, FlxG.height - 32, 0, "", 20);
-		beatTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		beatTxt.scrollFactor.set();
-		add(beatTxt);
-
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
-		beatTxt.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -525,7 +522,9 @@ class PlayState extends MusicBeatState
 			daBeats += 1;
 		}
 
+		#if debug
 		trace(unspawnNotes.length);
+		#end
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByShit);
@@ -672,23 +671,26 @@ class PlayState extends MusicBeatState
 			rankingTracker = '[MFC!!]';
 		if (goodTracker >= 1 && badTracker == 0 && shitTracker == 0 && misses == 0)
 			rankingTracker = '[GFC!]';
-		if (badTracker >= 1 && misses == 0)
+		if (badTracker >= 1 || shitTracker >= 1 && misses == 0)
 			rankingTracker = '[FC]';
 		if (misses >= 1 && misses <= 10)
 			rankingTracker = '[SDCB]';
 		if (misses >= 10)
 			rankingTracker = '[Clear]';
 
-		// scoreTxt.text = "Score: " + songScore;
-		// infoTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " +  ratingTxt + " || " + "Combo: " + comboScore + " || " + "Misses: " + misses;
-		// scoreTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " + ratingTxt + " || " + "Combo: " + combo + " || " + "Misses: " + misses;
 		scoreTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "%" + ' || ' + "Ranking: " + rankingTracker + " || " + "Misses: " + misses;
 
-		//beatTxt.text = "Totalbeats: " + totalBeats; //debug stuff, forgot to remove - Lexi~
-
 		var ratingArray:Array<Dynamic> = [
-			[99.95, "[S++]", 0xFFFFD700], [99.5, "[S+]", 0xFF8D3D8D],  [99, "[S]", 0xFF00FFFF], [95, "[A+]", 0xFF31CD31], [90, "[A]", 0xFF00FF00],
-			[85, "[B+]", 0xFFFBC898],    [80, "[B]", 0xFFFF8000], [75, "[C+]", 0xFFFA5D5D],  [70, "[C]", 0xFFFFFFFF],  [0, "[D]", 0xFFFFFFFF],
+			[99.95, "[S++]", 0xFFFFD700],
+			[99.5, "[S+]", 0xFF8D3D8D], 
+			[99, "[S]", 0xFF00FFFF], 
+			[95, "[A+]", 0xFF31CD31], 
+			[90, "[A]", 0xFF00FF00],
+			[85, "[B+]", 0xFFFBC898],    
+			[80, "[B]", 0xFFFF8000], 
+			[75, "[C+]", 0xFFFA5D5D],  
+			[70, "[C]", 0xFFFFFFFF],  
+			[0, "[D]", 0xFFFFFFFF],
 		];
 
 		for (thing in ratingArray)
@@ -717,6 +719,12 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.switchState(new ChartingState());
 		}
+
+		if (FlxG.keys.justPressed.R)
+			{
+				health -= 2;
+				trace('Death by suicide - pressed reset');
+			}
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);

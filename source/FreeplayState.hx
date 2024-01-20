@@ -28,6 +28,10 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
+		#if desktop
+		DiscordClient.changePresence('Browsing the Freeplay menu.', '');
+		#end
+
 		songs = CoolUtil.coolTextFile('assets/data/freeplaySongs.txt');
 
 		if (FlxG.sound.music != null)

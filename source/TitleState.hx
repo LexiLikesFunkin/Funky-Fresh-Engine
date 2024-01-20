@@ -21,7 +21,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
 #if desktop
-import Discord.DiscordClient;
+import DiscordClient;
 #end
 
 class TitleState extends MusicBeatState
@@ -82,7 +82,7 @@ class TitleState extends MusicBeatState
 		#if desktop
 		DiscordClient.initialize();
 		#end
-
+		
 		//Application.current.onExit.add(function(exitCode)
 		//{
 			//DiscordClient.shutdown();

@@ -25,6 +25,10 @@ class ClientPrefs
 			ClientPrefs.setOption('endlessMode', false); //No worky :( - Lexi		
 		if (ClientPrefs.getOption('newHoldNotes') == null)
 			ClientPrefs.setOption('newHoldNotes', true);
+		if (ClientPrefs.getOption('performancePlus') == null)
+			ClientPrefs.setOption('performancePlus', false);
+		if (ClientPrefs.getOption('performanceExtreme') == null)
+			ClientPrefs.setOption('performanceExtreme', true);
 
 		if(framerate > FlxG.drawFramerate) {
 			FlxG.updateFramerate = framerate;

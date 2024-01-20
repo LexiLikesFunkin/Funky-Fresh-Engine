@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 
 class OptionsMenu extends MusicBeatState
 {
-	var menuItems:Array<String> = ['Gameplay', 'Performance & Appearance'];
+	var menuItems:Array<String> = ['Gameplay', 'Performance'];
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var curSelected:Int = 0;
 
@@ -54,8 +54,8 @@ class OptionsMenu extends MusicBeatState
 			switch (daSelected) {
 				case "Gameplay":
 					FlxG.switchState(new GameplayOptionsState());
-				case "Performance & Appearance":
-					//FlxG.switchState(new GameplayOptionsState());
+				case "Performance":
+					FlxG.switchState(new PerformanceOptionsState());
 			}
 		}
 		super.update(elapsed);

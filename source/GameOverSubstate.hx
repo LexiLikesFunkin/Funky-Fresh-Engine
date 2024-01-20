@@ -6,6 +6,9 @@ import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+#if desktop
+import DiscordClient;
+#end
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -14,8 +17,22 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	// var
 
+	var funkyFreshQuips:Array<String> = [
+		'Gonna cry?', 'You died!',
+		'You were slain...', 'Oh BROTHER, this guy STINKS!',
+		'Not so tight bars, little man.', 'Maybe you should try again later.',
+		'Try again!', 'You got this!',
+		'Reading the quips, eh?', '*fnf_loss_sfx.ogg*',
+		'Oh my god you suck.', 'Nuh uh! Try again idiot.',];
+	var insultingQuip:String = '';
+
 	public function new(x:Float, y:Float)
 	{
+		insultingQuip = FlxG.random.getObject(funkyFreshQuips);
+		#if desktop
+		DiscordClient.changePresence(('On the gameover screen! - ' + PlayState.SONG.song), insultingQuip);
+		#end
+
 		super();
 
 		Conductor.songPosition = 0;
