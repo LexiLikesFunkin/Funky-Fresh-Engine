@@ -93,7 +93,7 @@ class MainMenuState extends MusicBeatState
 		add(versionShit);
 
 		var buildShit:FlxText = new FlxText(5, FlxG.height - 32, 0, "Engine Build Number: " + BuildNumber.getBuildNumber() + "
-		 - Pre-Release Alpha Version 0.0.3 - Preview!");
+		 - Pre-Release Alpha Version 0.0.3");
 		buildShit.scrollFactor.set();
 		buildShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(buildShit);
