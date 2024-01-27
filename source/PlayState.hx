@@ -122,8 +122,17 @@ class PlayState extends MusicBeatState
 
 	public static var campaignScore:Int = 0;
 
+	public var overlay = new FlxSprite();
+
 	override public function create()
 	{
+		overlay.makeGraphic(1280, 720, FlxColor.BLACK);
+		overlay.visible == false;
+		if (ClientPrefs.getOption('traditionalFunkin') == true){
+			add(overlay);
+			overlay.visible == false;}
+
+		FlxG.mouse.visible = false;
 		#if desktop
 		DiscordClient.changePresence('Playing ' + SONG.song, '');
 		#end
@@ -243,11 +252,10 @@ class PlayState extends MusicBeatState
 				camPos.x += 400;
 		}
 
-		boyfriend = new Boyfriend(770, 450);
+		boyfriend = new Boyfriend(770, 450, SONG.player1);
 		add(boyfriend);
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
-		// doof.x += 70;
 		doof.y = FlxG.height * 0.5;
 		doof.scrollFactor.set();
 		doof.finishThing = startCountdown;
@@ -265,19 +273,12 @@ class PlayState extends MusicBeatState
 
 		startingSong = true;
 
-		// startCountdown();
-
 		generateSong(SONG.song);
 
-		// add(strumLine);
-
 		camFollow = new FlxObject(0, 0, 1, 1);
-
 		camFollow.setPosition(camPos.x, camPos.y);
 		add(camFollow);
-
 		FlxG.camera.follow(camFollow, LOCKON, 0.04);
-		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = 1.05;
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
@@ -287,7 +288,6 @@ class PlayState extends MusicBeatState
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic('assets/images/healthBar.png');
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
-		add(healthBarBG);
 
 		var healthC1:FlxColor = 0xFFFF0000;
 		var healthC2:FlxColor = 0xFF66FF33;
@@ -296,18 +296,18 @@ class PlayState extends MusicBeatState
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
 		healthBar.createFilledBar(healthC1, healthC2);
-		add(healthBar);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
-		add(iconP1);
 
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
-		add(iconP2);
 
-		iconP1.cameras = [camHUD];
-		iconP2.cameras = [camHUD];
+		if (!ClientPrefs.getOption('traditionalFunkin') == true){
+			add(healthBarBG);
+			add(healthBar);
+			add(iconP1);
+			add(iconP2);}
 
 		if (isStoryMode)
 		{
@@ -336,12 +336,9 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
-
-		// if (SONG.song == 'South')
-		// FlxG.camera.alpha = 0.7;
-		// UI_camera.zoom = 1;
-
-		// cameras = [FlxG.cameras.list[1]];
+		iconP1.cameras = [camHUD];
+		iconP2.cameras = [camHUD];
+		overlay.cameras = [camHUD];
 
 		super.create();
 	}
@@ -539,6 +536,11 @@ class PlayState extends MusicBeatState
 
 	private function generateStaticArrows(player:Int):Void
 	{
+		if (ClientPrefs.getOption('traditionalFunkin') == true)
+			{
+				overlay.visible == true;
+			}
+
 		for (i in 0...4)
 		{
 			FlxG.log.add(i);

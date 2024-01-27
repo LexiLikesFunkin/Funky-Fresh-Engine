@@ -27,8 +27,8 @@ class ClientPrefs
 			ClientPrefs.setOption('newHoldNotes', true);
 		if (ClientPrefs.getOption('performancePlus') == null)
 			ClientPrefs.setOption('performancePlus', false);
-		if (ClientPrefs.getOption('performanceExtreme') == null)
-			ClientPrefs.setOption('performanceExtreme', true);
+		if (ClientPrefs.getOption('traditionalFunkin') == null)
+			ClientPrefs.setOption('traditionalFunkin', true);
 
 		if(framerate > FlxG.drawFramerate) {
 			FlxG.updateFramerate = framerate;

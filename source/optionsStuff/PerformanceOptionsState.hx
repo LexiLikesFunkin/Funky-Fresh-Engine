@@ -10,7 +10,7 @@ import flixel.util.FlxColor;
 
 class PerformanceOptionsState extends MusicBeatState
 {
-    var menuItems:Array<String> = ['Performance Plus', 'Extreme Performance'];
+    var menuItems:Array<String> = ['Performance Plus', 'Traditional Mode'];
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var curSelected:Int = 0;
     var gtText:FlxText;
@@ -64,10 +64,10 @@ class PerformanceOptionsState extends MusicBeatState
                         if (controls.ACCEPT)
                             ClientPrefs.setOption('performancePlus', !ClientPrefs.getOption('performancePlus'));
 
-                    case "Extreme Performance":
-                        gtText.text = 'Extreme Performance is currently set to ${ClientPrefs.getOption('performanceExtreme')}.';    
+                    case "Traditional Mode":
+                        gtText.text = 'Traditional Mode is currently set to ${ClientPrefs.getOption('traditionalFunkin')}.';    
                         if (controls.ACCEPT)
-                            ClientPrefs.setOption('performanceExtreme', !ClientPrefs.getOption('performanceExtreme'));
+                            ClientPrefs.setOption('traditionalFunkin', !ClientPrefs.getOption('traditionalFunkin'));
                 }
 
             super.update(elapsed);

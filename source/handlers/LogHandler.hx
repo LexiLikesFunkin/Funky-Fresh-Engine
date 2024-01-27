@@ -18,7 +18,7 @@ class LogHandler extends Sprite {
         x = 0; y = 0;
         
         logText = new TextField();
-        logText.x = 10;
+        logText.x = 3;
         logText.y = 15;
         logText.autoSize = LEFT;
         logText.selectable = false;

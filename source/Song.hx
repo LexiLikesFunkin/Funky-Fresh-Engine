@@ -16,6 +16,7 @@ typedef SwagSong =
 	var sectionLengths:Array<Dynamic>;
 	var needsVoices:Bool;
 	var speed:Float;
+	var validScore:Bool;
 
 	var player1:String;
 	var player2:String;
@@ -30,6 +31,7 @@ class Song
 	public var sectionLengths:Array<Dynamic> = [];
 	public var needsVoices:Bool = true;
 	public var speed:Float = 1;
+	var validScore:Bool = true;
 
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
