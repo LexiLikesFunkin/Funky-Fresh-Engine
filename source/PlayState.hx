@@ -194,7 +194,7 @@ class PlayState extends MusicBeatState
 
 			isHalloween = true;
 		}
-		else
+		else if (SONG.song.toLowerCase() == 'tutorial' || SONG.song.toLowerCase() == 'bopeebo' || SONG.song.toLowerCase() == 'fresh' || SONG.song.toLowerCase() == 'dadbattle')
 		{
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(AssetPaths.stageback__png);
 				// bg.setGraphicSize(Std.int(bg.width * 2.5));

@@ -105,10 +105,10 @@ class Character extends FlxSprite
 				tex = FlxAtlasFrames.fromSparrow("assets/images/characters/dad/DADDY_DEAREST.png", "assets/images/characters/dad/DADDY_DEAREST.xml");
 				frames = tex;
 				animation.addByPrefix('idle', 'Dad idle dance', 24);
-				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
-				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24);
-				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24);
+				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24, false);
+				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24, false);
+				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24, false);
+				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24, false);
 				playAnim('idle');
 
 				addOffset('idle');

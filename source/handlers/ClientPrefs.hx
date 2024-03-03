@@ -19,7 +19,6 @@ class ClientPrefs
 	public static function initOptions(){
 		if (FlxG.save.data.options != null)
 			options = FlxG.save.data.options;
-		var framerate:Int = 60;
 
 		if (ClientPrefs.getOption('endlessMode') == null)
 			ClientPrefs.setOption('endlessMode', false); //No worky :( - Lexi		
@@ -28,14 +27,6 @@ class ClientPrefs
 		if (ClientPrefs.getOption('performancePlus') == null)
 			ClientPrefs.setOption('performancePlus', false);
 		if (ClientPrefs.getOption('traditionalFunkin') == null)
-			ClientPrefs.setOption('traditionalFunkin', true);
-
-		if(framerate > FlxG.drawFramerate) {
-			FlxG.updateFramerate = framerate;
-			FlxG.drawFramerate = framerate;
-		} else {
-			FlxG.drawFramerate = framerate;
-			FlxG.updateFramerate = framerate;
-		}
+			ClientPrefs.setOption('traditionalFunkin', false);
 	}
 }
