@@ -109,9 +109,11 @@ class ChartingState extends MusicBeatState
 				needsVoices: false,
 				player1: 'bf',
 				player2: 'dad',
+				player3: 'gf',
 				sectionLengths: [],
 				speed: 1,
-				validScore: false
+				validScore: false,
+				stage: 'stage'
 			};
 		}
 
@@ -190,7 +192,7 @@ class ChartingState extends MusicBeatState
 			trace('CHECKED!');
 		};
 
-		var check_mute_inst = new FlxUICheckBox(10, 200, null, null, "Mute Instrumental (in editor)", 100);
+		var check_mute_inst = new FlxUICheckBox(10, 350, null, null, "Mute Instrumental (in editor)", 100);
 		check_mute_inst.checked = false;
 		check_mute_inst.callback = function()
 		{
@@ -223,10 +225,12 @@ class ChartingState extends MusicBeatState
 
 		var characters:Array<String> = CoolUtil.loadText('assets/data/characterList.txt');
 
+		var stages:Array<String> = CoolUtil.loadText('assets/data/stageList.txt');
+
 		var stepperBPM:FlxUINumericStepper = new FlxUINumericStepper(10, 65, 1, 1, 1, 250, 0);
 		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
-		
+	
 		var player1DropDown = new FlxUIDropDownMenu(10, 115, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];
@@ -239,6 +243,18 @@ class ChartingState extends MusicBeatState
 		});
 		player2DropDown.selectedLabel = _song.player2;
 
+		var player3DropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+			{
+				_song.player3 = characters[Std.parseInt(character)];
+			});
+			player3DropDown.selectedLabel = _song.player3;
+
+		var stageDropDown = new FlxUIDropDownMenu(140, 200, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true), function(stage:String)
+		{
+			_song.stage = stages[Std.parseInt(stage)];
+		});
+		stageDropDown.selectedLabel = _song.stage;
+
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
 		tab_group_song.add(UI_songTitle);
@@ -250,10 +266,14 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(reloadSongJson);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperSpeed);
+		tab_group_song.add(stageDropDown);
+		tab_group_song.add(player3DropDown);
 		tab_group_song.add(player2DropDown);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
 		tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
+		tab_group_song.add(new FlxText(player3DropDown.x, player3DropDown.y - 15, 0, 'Girlfriend:'));
+		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
 
 		UI_box.addGroup(tab_group_song);
 		UI_box.scrollFactor.set();
@@ -389,8 +409,8 @@ class ChartingState extends MusicBeatState
 				case 'Change BPM':
 					_song.notes[curSection].changeBPM = check.checked;
 					FlxG.log.add('changed bpm shit');
-				//case "Alt Animation":
-					//_song.notes[curSection].altAnim = check.checked;
+				case "Alt Animation":
+					_song.notes[curSection].altAnim = check.checked;
 			}
 		}
 		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
@@ -454,6 +474,7 @@ class ChartingState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		updateHeads();
+		FlxG.mouse.visible = true;
 
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
@@ -651,7 +672,7 @@ class ChartingState extends MusicBeatState
 
 		stepperLength.value = sec.lengthInSteps;
 		check_mustHitSection.checked = sec.mustHitSection;
-		//check_altAnim.checked = sec.altAnim;
+		check_altAnim.checked = sec.altAnim;
 		check_changeBPM.checked = sec.changeBPM;
 		stepperSectionBPM.value = sec.bpm;
 	}
@@ -738,8 +759,8 @@ class ChartingState extends MusicBeatState
 			changeBPM: false,
 			mustHitSection: false,
 			sectionNotes: [],
-			typeOfSection: 0
-			//altAnim: false
+			typeOfSection: 0,
+			altAnim: false
 		};
 
 		_song.notes.push(sec);

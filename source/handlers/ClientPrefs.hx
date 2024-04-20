@@ -28,5 +28,7 @@ class ClientPrefs
 			ClientPrefs.setOption('performancePlus', false);
 		if (ClientPrefs.getOption('traditionalFunkin') == null)
 			ClientPrefs.setOption('traditionalFunkin', false);
+		if (ClientPrefs.getOption('downscroll') == null)
+			ClientPrefs.setOption('downscroll', false);
 	}
 }

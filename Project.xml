@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' - Funky Fresh" file="Funky Fresh Engine" packageName="" main="Main" version="0.2.1" company="LexiLikesFunkin'" />
+	<app title="Friday Night Funkin' - Funky Fresh" file="Funky Fresh Engine" packageName="" main="Main" version="0.2.6" company="LexiLikesFunkin'" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -59,6 +59,7 @@
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	<haxelib name="polymod"/>
 
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />

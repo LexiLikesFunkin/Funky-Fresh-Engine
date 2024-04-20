@@ -7,7 +7,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;
 #if sys
 import sys.FileSystem;
-#end
+import polymod.Polymod;
+#end 
 
 class Files {
 	static var file:String;
@@ -93,7 +94,7 @@ class Files {
 		return Assets.exists('assets/$path/$name.$extention');
 	}
 
-	/*#if sys
+	#if sys
 	public static function readFolder(folder:String) {
 		var files:Array<String> = [];
 		var directoriesToRead:Array<String> = [];
@@ -112,5 +113,5 @@ class Files {
 
 		return files;
 	}
-	#end*/
+	#end
 }

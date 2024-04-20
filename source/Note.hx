@@ -1,5 +1,6 @@
 package;
 
+import handlers.ClientPrefs;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
@@ -89,6 +90,9 @@ class Note extends FlxSprite
 
 		if (isSustainNote && prevNote != null)
 		{
+			if (ClientPrefs.getOption('downscroll') == true)
+				angle = 180;
+
 			noteScore * 0.2;
 			alpha = 0.6;
 

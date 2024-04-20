@@ -23,6 +23,9 @@ import flixel.util.FlxTimer;
 #if desktop
 import DiscordClient;
 #end
+#if sys
+import handlers.ModHandler;
+#end
 
 class TitleState extends MusicBeatState
 {
@@ -50,9 +53,14 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if sys
+		ModHandler.loadMods();
+		#end
+
 		#if (!web)
 		TitleState.soundExt = '.ogg';
 		#end
+		
 		#if (web)
 		TitleState.soundExt = '.mp3';
 		#end
@@ -71,13 +79,13 @@ class TitleState extends MusicBeatState
 
 		Highscore.load();
 
-		if (FlxG.save.data.weekUnlocked != null)
+		/*if (FlxG.save.data.weekUnlocked != null)
 		{
 			StoryMenuState.weekUnlocked = FlxG.save.data.weekUnlocked;
 
 			if (StoryMenuState.weekUnlocked.length < 3)
 				StoryMenuState.weekUnlocked.insert(0, true);
-		}
+		}*/
 
 		#if desktop
 		DiscordClient.initialize();

@@ -13,7 +13,7 @@ class GameplayOptionsState extends MusicBeatState
 {
     var settingsSave:FlxSave = new FlxSave();
 
-    var menuItems:Array<String> = ['New Hold Sustains'];
+    var menuItems:Array<String> = ['New Hold Sustains', 'Downscroll'];
     var curSelected:Int = 0;
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
@@ -71,6 +71,12 @@ class GameplayOptionsState extends MusicBeatState
 
                         if (controls.ACCEPT)
                             ClientPrefs.setOption('newHoldNotes', !ClientPrefs.getOption('newHoldNotes'));
+                        
+                    case "Downscroll":
+                        gtText.text = 'Downscroll is currently set to ${ClientPrefs.getOption('downscroll')}.';
+
+                        if (controls.ACCEPT)
+                            ClientPrefs.setOption('downscroll', !ClientPrefs.getOption('downscroll'));
                 }
             }
            super.update(elapsed);
