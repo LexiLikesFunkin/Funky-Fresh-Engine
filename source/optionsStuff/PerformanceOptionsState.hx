@@ -55,7 +55,7 @@ class PerformanceOptionsState extends MusicBeatState
             if (controls.DOWN_P)
                 changeSelection(1);
             if (controls.BACK)
-                FlxG.switchState(new MainMenuState());
+                FlxG.switchState(new OptionsMenu());
             var daSelected:String = menuItems[curSelected];
     
                 switch (daSelected) {

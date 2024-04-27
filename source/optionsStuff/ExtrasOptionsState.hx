@@ -55,14 +55,12 @@ class ExtrasOptionsState extends MusicBeatState
 		if (controls.DOWN_P)
 			changeSelection(1);
 		if (controls.BACK)
-			FlxG.switchState(new MainMenuState());
-		if (controls.ACCEPT) {
+			FlxG.switchState(new OptionsMenu());
 			var daSelected:String = menuItems[curSelected];
 
-			switch (daSelected) {
-                case 'Changelog':
-					FlxG.switchState(new ChangelogState());
-			}
+		switch (daSelected) {
+            case 'Changelog':
+				FlxG.switchState(new ChangelogState());
 		}
 		super.update(elapsed);
 	}

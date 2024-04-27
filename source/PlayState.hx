@@ -205,6 +205,9 @@ class PlayState extends MusicBeatState
 		theStage = (SONG.stage);
 		loadStage(theStage);
 
+		if (SONG.player3 == null)
+			SONG.player3 = 'gf';
+
 		gf = new Character(400, 130, SONG.player3);
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.antialiasing = true;
@@ -213,6 +216,9 @@ class PlayState extends MusicBeatState
 		if (curStage == 'limo')
 			add(limo);
 
+		if (SONG.player2 == null)
+			SONG.player2 = 'dad';
+		
 		dad = new Character(100, 100, SONG.player2);
 		add(dad);
 

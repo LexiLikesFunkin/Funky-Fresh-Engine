@@ -54,31 +54,27 @@ class GameplayOptionsState extends MusicBeatState
         }
     override function update(elapsed:Float)
         {
-            super.update(elapsed);
-
             if (controls.UP_P)
                 changeSelection(-1);
             if (controls.DOWN_P)
                 changeSelection(1);
             if (controls.BACK)
-                FlxG.switchState(new MainMenuState());
-            if (controls.ACCEPT) {
-                var daSelected:String = menuItems[curSelected];
+                FlxG.switchState(new OptionsMenu());
+            var daSelected:String = menuItems[curSelected];
     
                 switch (daSelected) {
                     case "New Hold Sustains":
-                        gtText.text = 'New Hold Sustains is currently set to ${ClientPrefs.getOption('newHoldNotes')}.';
-
                         if (controls.ACCEPT)
                             ClientPrefs.setOption('newHoldNotes', !ClientPrefs.getOption('newHoldNotes'));
+
+                        gtText.text = 'New Hold Sustains is currently set to ${ClientPrefs.getOption('newHoldNotes')}.';
                         
                     case "Downscroll":
-                        gtText.text = 'Downscroll is currently set to ${ClientPrefs.getOption('downscroll')}.';
-
                         if (controls.ACCEPT)
                             ClientPrefs.setOption('downscroll', !ClientPrefs.getOption('downscroll'));
+
+                        gtText.text = 'Downscroll is currently set to ${ClientPrefs.getOption('downscroll')}.';
                 }
-            }
            super.update(elapsed);
         }
     function changeSelection(change:Int = 0):Void

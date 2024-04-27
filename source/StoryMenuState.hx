@@ -436,19 +436,19 @@ class StoryMenuState extends MusicBeatState
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 
 		var ratingArray:Array<Dynamic> = [
-			[16450, 120000, 200000, 200000, 260000, "Excellent!!"],
-			[14500, 100000, 180000, 175000, 230000, "Sick!"], 
-			[12000, 85000, 165000, 150000, 200000, "Good"], 
-			[9500, 70000, 130000, 125000, 175000, "Ok."],
-			[1, 1, 1, 1, 1, "Bad.."],
-			[0, 0, 0, 0, 1, "Unranked"],
+			[16450, 120000, 200000, 200000, 260000, 230000, 225000, "Excellent!!"],
+			[14500, 100000, 180000, 175000, 230000, 200000, 200000, "Sick!"], 
+			[12000, 85000, 165000, 150000, 200000, 175000, 175000, "Good"], 
+			[9500, 70000, 130000, 125000, 175000, 140000, 140000, "Ok."],
+			[1, 1, 1, 1, 1, 1, 1, "Bad.."],
+			[0, 0, 0, 0, 0, 0, 0, "Unranked"],
 		];
 
 		for (thing in ratingArray)
 			{
 				if (intendedScore >= thing[(0 + curWeek)])
 				{
-					weekRank = thing[5];
+					weekRank = thing[7];
 					break;
 				}
 			}

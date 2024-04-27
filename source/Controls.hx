@@ -31,6 +31,10 @@ enum abstract Action(String) to String from String
 	var PAUSE = "pause";
 	var RESET = "reset";
 	var CHEAT = "cheat";
+	var UP_UI = "up_menu";
+	var RIGHT_UI = "right_menu";
+	var LEFT_UI = "left_menu";
+	var DOWN_UI = "down_menu";
 }
 #else
 @:enum
@@ -53,6 +57,10 @@ abstract Action(String) to String from String
 	var PAUSE = "pause";
 	var RESET = "reset";
 	var CHEAT = "cheat";
+	var UP_UI = "up_menu";
+	var RIGHT_UI = "right_menu";
+	var LEFT_UI = "left_menu";
+	var DOWN_UI = "down_menu";
 }
 #end
 
@@ -78,6 +86,10 @@ enum Control
 	BACK;
 	PAUSE;
 	CHEAT;
+	UP_UI;
+	RIGHT_UI;
+	LEFT_UI;
+	DOWN_UI;
 }
 
 enum KeyboardScheme
@@ -111,6 +123,10 @@ class Controls extends FlxActionSet
 	var _pause = new FlxActionDigital(Action.PAUSE);
 	var _reset = new FlxActionDigital(Action.RESET);
 	var _cheat = new FlxActionDigital(Action.CHEAT);
+	var _up_UI = new FlxActionDigital(Action.UP_UI);
+	var _left_UI = new FlxActionDigital(Action.LEFT_UI);
+	var _right_UI = new FlxActionDigital(Action.RIGHT_UI);
+	var _down_UI = new FlxActionDigital(Action.DOWN_UI);
 
 	#if (haxe >= "4.0.0")
 	var byName:Map<String, FlxActionDigital> = [];
@@ -206,6 +222,18 @@ class Controls extends FlxActionSet
 	inline function get_CHEAT()
 		return _cheat.check();
 
+	inline function get_UP_UI()
+		return _up_UI.check();
+	
+	inline function get_LEFT_UI()
+		return _left_UI.check();
+
+	inline function get_RIGHT_UI()
+		return _right_UI.check();
+
+	inline function get_DOWN_UI()
+		return _down_UI.check();
+
 	#if (haxe >= "4.0.0")
 	public function new(name, scheme = None)
 	{
@@ -228,6 +256,10 @@ class Controls extends FlxActionSet
 		add(_pause);
 		add(_reset);
 		add(_cheat);
+		add(_up_UI);
+		add(_left_UI);
+		add(_right_UI);
+		add(_down_UI);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -256,6 +288,10 @@ class Controls extends FlxActionSet
 		add(_pause);
 		add(_reset);
 		add(_cheat);
+		add(_up_UI);
+		add(_left_UI);
+		add(_right_UI);
+		add(_down_UI);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -310,6 +346,10 @@ class Controls extends FlxActionSet
 			case PAUSE: _pause;
 			case RESET: _reset;
 			case CHEAT: _cheat;
+			case UP_UI: _up_UI;
+			case LEFT_UI: _left_UI;
+			case RIGHT_UI: _right_UI;
+			case DOWN_UI: _down_UI;
 		}
 	}
 
@@ -355,6 +395,14 @@ class Controls extends FlxActionSet
 				func(_reset, JUST_PRESSED);
 			case CHEAT:
 				func(_cheat, JUST_PRESSED);
+			case UP_UI:
+				func(_up_UI, JUST_PRESSED);
+			case LEFT_UI:
+				func(_left_UI, JUST_PRESSED);
+			case RIGHT_UI:
+				func(_right_UI, JUST_PRESSED);
+			case DOWN_UI:
+				func(_down_UI, JUST_PRESSED);
 		}
 	}
 
