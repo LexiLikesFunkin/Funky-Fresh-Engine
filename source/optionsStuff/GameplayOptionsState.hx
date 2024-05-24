@@ -13,7 +13,7 @@ class GameplayOptionsState extends MusicBeatState
 {
     var settingsSave:FlxSave = new FlxSave();
 
-    var menuItems:Array<String> = ['New Hold Sustains', 'Downscroll'];
+    var menuItems:Array<String> = ['New Hold Sustains', 'Downscroll', 'Framerate'];
     var curSelected:Int = 0;
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
@@ -74,6 +74,19 @@ class GameplayOptionsState extends MusicBeatState
                             ClientPrefs.setOption('downscroll', !ClientPrefs.getOption('downscroll'));
 
                         gtText.text = 'Downscroll is currently set to ${ClientPrefs.getOption('downscroll')}.';
+
+                    case "Framerate":
+                        if (controls.LEFT){
+                            if (ClientPrefs.getOption('framerate') >20)
+                                (ClientPrefs.setOption('framerate', ClientPrefs.getOption('framerate') - 1));}
+                        if (controls.RIGHT){
+                            if (ClientPrefs.getOption('framerate') <350)
+                                (ClientPrefs.setOption('framerate', ClientPrefs.getOption('framerate') + 1));}
+                        if (controls.ACCEPT){
+                            FlxG.stage.frameRate = ClientPrefs.getOption('framerate');
+                            FlxG.drawFramerate = ClientPrefs.getOption('framerate');}
+    
+                        gtText.text = 'FPS is currently set to ${ClientPrefs.getOption('framerate')}. (Left and Right to change, Enter to update!)';
                 }
            super.update(elapsed);
         }

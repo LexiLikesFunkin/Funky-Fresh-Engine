@@ -30,5 +30,7 @@ class ClientPrefs
 			ClientPrefs.setOption('traditionalFunkin', false);
 		if (ClientPrefs.getOption('downscroll') == null)
 			ClientPrefs.setOption('downscroll', false);
+		if (ClientPrefs.getOption('framerate') == null)
+			ClientPrefs.setOption('framerate', 60);
 	}
 }

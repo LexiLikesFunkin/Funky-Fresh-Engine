@@ -140,6 +140,8 @@ class PlayState extends MusicBeatState
 
 	var defaultCamZoom:Float = 1.05;
 
+	var noteDiffText:FlxText;
+
 	override public function create()
 	{
 		FlxG.camera.zoom = defaultCamZoom;
@@ -727,7 +729,7 @@ class PlayState extends MusicBeatState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		recalculateAccuracy();
+		recalculateAccuracy(); 
 
 		var rankingTracker:String = '';
 		var discordTracker:String = '';
@@ -1006,20 +1008,18 @@ class PlayState extends MusicBeatState
 					daNote.visible = true;
 					daNote.active = true;
 				}
-
-				/*daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
-
-				// i am so fucking sorry for this if condition
-				if (daNote.isSustainNote
-					&& daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2
-					&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
-				{
-					var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
-					swagRect.y /= daNote.scale.y;
-					swagRect.height -= swagRect.y;
-
-					daNote.clipRect = swagRect;
-				}*/
+				if ((ClientPrefs.getOption('downscroll') == true))
+					{
+						if (daNote.y > (strumLine.y + 50)){
+							//daNote.alpha = 0.2;
+						}
+					}
+				else
+					{
+						if (daNote.y > (strumLine.y - 50)){
+							//daNote.alpha = 0.2;
+						}
+					}
 
 				var strumLineMid = strumLine.y + Note.swagWidth / 2;
 
@@ -1132,7 +1132,12 @@ class PlayState extends MusicBeatState
 							vocals.volume = 0;
 							misses += 1;
 							allNotes++;
+							if (combo > 5)
+								{
+									gf.playAnim('sad');
+								}
 							combo = 0;
+							FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(1));
 						}
 	
 						daNote.active = false;
@@ -1183,7 +1188,7 @@ class PlayState extends MusicBeatState
 					difficulty = '-easy';
 
 				if (storyDifficulty == 2)
-					difficulty == '-hard';
+					difficulty = '-hard';
 
 				if (SONG.song.toLowerCase() == 'eggnog')
 					{
@@ -1214,7 +1219,6 @@ class PlayState extends MusicBeatState
 	private function popUpScore(strumtime:Float, daNote:Note):Void
 	{
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
-		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
 
 		var placement:String = Std.string(combo);
@@ -1228,6 +1232,11 @@ class PlayState extends MusicBeatState
 		var score:Int = 350;
 		var ratingMod:Float = 1;
 		var isSick:Bool = true;
+
+		noteDiffText = new FlxText(rating.x, (rating.y - 200), 0, '$noteDiff', 8, true);
+		noteDiffText.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		//trace(noteDiff + 'ms');
+		//add(noteDiffText);
 
 		var daRating:String = "sick";
 
@@ -1531,27 +1540,15 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			health -= 0.03; //Made it less punishing to attempt the note and fail, this value was 0.6 before!!
-			if (combo > 5)
-			{
-				gf.playAnim('sad');
-			}
-			combo = 0;
-			misses += 1;
+			//if (combo > 5)
+			//{
+			//	gf.playAnim('sad');
+			//}
 			if (!practiceMode)
-				songScore -= 10;
-			allNotes++;
+				songScore -= 50;
+			//allNotes++;
 
-			FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(0.1, 0.2));
-			// FlxG.sound.play('assets/sounds/missnote1' + TitleState.soundExt, 1, false);
-			// FlxG.log.add('played imss note');
-
-			boyfriend.stunned = true;
-
-			// get stunned for 5 seconds
-			new FlxTimer().start(5 / 60, function(tmr:FlxTimer)
-			{
-				boyfriend.stunned = false;
-			});
+			FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(1));
 
 			switch (direction)
 			{
